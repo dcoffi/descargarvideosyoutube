@@ -88,10 +88,12 @@ document.getElementById('download-subs-btn').addEventListener('click', async () 
     mispinner.classList.remove('d-none');
     filaVideo.classList.add('p-3');
     if (!url) {
+        mispinner.classList.add('d-none');
+        filaVideo.classList.remove('p-3');
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'Por favor ingresa una URL de YouTube',
+            text: 'Por favor ingresa una URL válida de YouTube',
         });
         return;
     }

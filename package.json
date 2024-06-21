@@ -1,21 +1,38 @@
 {
-  "name": "descarga-de-videos-youtube",
+  "name": "midescargasyoutube",
+  "productName": "midescargasyoutube",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Una aplicación para descargar videos, audios y subtítulos de videos en Youtube",
+  "main": "src/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron main.js"
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\""
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.4.0",
+    "@electron-forge/maker-deb": "^7.4.0",
+    "@electron-forge/maker-rpm": "^7.4.0",
+    "@electron-forge/maker-squirrel": "^7.4.0",
+    "@electron-forge/maker-zip": "^7.4.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
+    "@electron-forge/plugin-fuses": "^7.4.0",
+    "@electron/fuses": "^1.8.0",
+    "electron": "31.0.2"
   },
   "keywords": [],
-  "author": "Daivinson Coffi",
-  "license": "MIT",
-  "description": "",
-  "devDependencies": {
-    "electron": "^31.0.1"
+  "author": {
+    "name": "Daivinson Coffi",
+    "email": "daivinson@gmail.com"
   },
+  "license": "MIT",
   "dependencies": {
     "@distube/ytdl-core": "^4.13.4",
     "axios": "^1.7.2",
+    "bootstrap": "^5.3.3",
+    "electron-squirrel-startup": "^1.0.1",
     "fs": "^0.0.1-security",
     "sweetalert2": "^11.6.13",
     "xml2js": "^0.6.2",

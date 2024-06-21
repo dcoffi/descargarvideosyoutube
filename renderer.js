@@ -7,7 +7,7 @@ document.getElementById('download-btn').addEventListener('click', async () => {
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'Por favor ingresa una URL de YouTube',
+            text: 'Por favor ingresa una URL válida de YouTube',
         });
         return;
     }
@@ -21,6 +21,11 @@ document.getElementById('download-btn').addEventListener('click', async () => {
         //videoElement.play();
         mispinner.classList.add('d-none');
         filaVideo.classList.remove('p-3');
+        Swal.fire({
+            icon: 'success',
+            title: 'Descarga completada',
+            text: `Video descargado en: ${videoPath}, por favor diríjase a dicha ruta y verifique el archivo descargado.`,
+        });
     } catch (error) {
         mispinner.classList.add('d-none');
         filaVideo.classList.remove('p-3');
@@ -28,7 +33,7 @@ document.getElementById('download-btn').addEventListener('click', async () => {
          Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: `Error descargando el video: Por favor verifique el URL`,
+            text: `Error descargando el video: Por favor ingresa una URL válida de YouTube`,
         });
         
     }
@@ -62,7 +67,7 @@ document.getElementById('download-audio-btn').addEventListener('click', async ()
         Swal.fire({
             icon: 'success',
             title: 'Descarga completada',
-            text: `Audio descargado en: ${audioPath}`,
+            text: `Audio descargado en: ${audioPath}, por favor diríjase a dicha ruta y verifique el archivo descargado.`,
         });
         
     } catch (error) {
@@ -72,7 +77,7 @@ document.getElementById('download-audio-btn').addEventListener('click', async ()
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: `Error descargando el audio: por favor verifique el URL`,
+            text: `Error descargando el audio: Por favor ingresa una URL válida de YouTube`,
         });
     }
 });

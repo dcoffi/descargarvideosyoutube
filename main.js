@@ -6,6 +6,7 @@ const path = require('node:path');
 const ytdl = require('ytdl-core');
 const fs = require('fs');
 const { log } = require('node:console');
+const Swal = require('sweetalert2');
 
 const createWindow = () => {
   // Create the browser window.
@@ -15,12 +16,12 @@ const createWindow = () => {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     },
-    titleBarStyle: 'hidden',
+    /*titleBarStyle: 'hidden',
   titleBarOverlay: {
     color: '#2f3241',
     symbolColor: '#74b1be',
     height: 1
-  }
+  }*/
   })
   ipcMain.handle('select-directory', async () => {
     const result = await dialog.showOpenDialog({
@@ -76,7 +77,7 @@ ipcMain.handle('download-audio', async (event, url) => {
         videoStream.on('error', reject);
     });
 });
-Menu.setApplicationMenu(null);
+//Menu.setApplicationMenu(null);
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
   

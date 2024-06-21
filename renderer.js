@@ -1,7 +1,16 @@
+
 document.getElementById('download-btn').addEventListener('click', async () => {
     const mispinner=document.getElementById('mi-spinner');
     const filaVideo=document.getElementById('filaVideo');
     const url = document.getElementById('url').value;
+    if (!url) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Por favor ingresa una URL de YouTube',
+        });
+        return;
+    }
     mispinner.classList.remove('d-none');
     filaVideo.classList.add('p-3');
     try {
@@ -15,14 +24,19 @@ document.getElementById('download-btn').addEventListener('click', async () => {
     } catch (error) {
         mispinner.classList.add('d-none');
         filaVideo.classList.remove('p-3');
-        console.error('Error downloading video:', error);
-        alert('Error descargando el video: ' + error.message);
+        //console.error('Error downloading video:', error);
+         Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `Error descargando el video: Por favor verifique el URL`,
+        });
         
     }
 });
 
 document.getElementById('select-dir-btn').addEventListener('click', async () => {
     const selectedDir = await window.electronAPI.selectDirectory();
+   
     const seleccionDirectorio=document.getElementById('selected-dir');
     document.getElementById('selected-dir').innerText = `Directorio seleccionado: ${selectedDir || 'Ninguno'}`;
     let valor=document.getElementById('selected-dir').innerText;
@@ -45,12 +59,20 @@ document.getElementById('download-audio-btn').addEventListener('click', async ()
         const audioPath = await window.electronAPI.downloadAudio(url);
         mispinner.classList.add('d-none');
         filaVideo.classList.remove('p-3');
-        alert(`Audio descargado en: ${audioPath}`);
+        Swal.fire({
+            icon: 'success',
+            title: 'Descarga completada',
+            text: `Audio descargado en: ${audioPath}`,
+        });
         
     } catch (error) {
         mispinner.classList.add('d-none');
         filaVideo.classList.remove('p-3');
-        console.error('Error downloading audio:', error);
-        alert('Error descargando el audio: ' + error.message);
+        //console.error('Error downloading audio:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `Error descargando el audio: por favor verifique el URL`,
+        });
     }
 });

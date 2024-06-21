@@ -181,7 +181,8 @@ Menu.setApplicationMenu(null);
 // Some APIs can only be used after this event occurs.
 
 app.whenReady().then(() => {
-  const icon = nativeImage.createFromPath('src/assets/youtube.png')
+  
+  const icon = nativeImage.createFromPath('./src/assets/youtube.png')
   bandeja = new Tray(icon)
   const contextMenu = Menu.buildFromTemplate([
   

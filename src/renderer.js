@@ -117,3 +117,8 @@ document.getElementById('download-subs-btn').addEventListener('click', async () 
         });
     }
 });
+window.addEventListener('DOMContentLoaded', () => {
+    const milogo = document.getElementById('milogo');
+    milogo.src ="assets/youtube.png";
+    
+  });

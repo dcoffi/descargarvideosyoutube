@@ -11,4 +11,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     downloadAudio: (url) => ipcRenderer.invoke('download-audio', url),
     downloadSubs: (url) => ipcRenderer.invoke('download-subs', url)
 });
-
+window.addEventListener('DOMContentLoaded', () => {
+    console.log('Preload script loaded');
+  });

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Descarga tus videos desde Youtube</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-1">
+          <img
+            src="file:///assets/youtube.png"
+            alt="Example Image"
+            class="milogo"
+          />
+        </div>
+        <div class="col-11">
+          <h1 class="text-left">Descargar Video de YouTube</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            >📽️Url de Youtube</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="url"
+            placeholder="Ingrese el URL del video de YouTube"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          👉<button id="select-dir-btn" class="btn btn-primary">
+            📂Seleccione el directorio destino
+          </button>
+        </div>
+        <div class="col-10 m-3">
+          <p id="selected-dir" class="alert alert-danger">
+            Directorio seleccionado: Ninguno
+          </p>
+        </div>
+      </div>
+      <!---->
+      <div class="row">
+        <div class="position-relative">
+          <div class="position-absolute top-0 start-50 translate-middle">
+            <div
+              class="spinner-grow text-danger d-none"
+              style="width: 3rem; height: 3rem"
+              role="status"
+              id="mi-spinner"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <!---->
+          </div>
+        </div>
+      </div>
+      <div class="row" id="filaVideo">
+        <div class="col-12">
+          <div class="ratio ratio-21x9">
+            <video id="video" controls></video>
+          </div>
+        </div>
+      </div>
+      <div class="row m-3">
+        <div class="col-6">
+          <button
+            id="download-btn"
+            data-bs-toggle="tooltip"
+            title="Descargar el video completo"
+            class="btn btn-info mx-auto p-2"
+          >
+            Descargar Video 🎞️
+          </button>
+        </div>
+        <div class="col-6">
+          <button
+            id="download-audio-btn"
+            data-bs-toggle="tooltip"
+            title="Descargar solo el audio"
+            class="btn btn-warning mx-auto p-2"
+          >
+            Descargar Audio 🎵
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <button
+          type="button"
+          class="btn btn-dark float-end boton-redondo"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="25"
+            height="25"
+            fill="currentColor"
+            class="bi bi-question-circle-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247m2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"
+            />
+          </svg>
+        </button>
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Soporte</h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <p>
+                  <img src="file:///assets/840.png" class="yo" />
+                  <span id="mi-contenido-ayuda"
+                    >Si necesita alguna consulta o apoyo adicional, no dude en
+                    contactar por correo electrónico</span
+                  >
+                  <a
+                    href="mailto:daivinson@gmail.com?subject=Consulta&body=Hola, necesito más información sobre las descargas de los videos en Youtube..."
+                    ><cite>Daivinson Coffi</cite></a
+                  >
+                </p>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                  id="mi-boton-cerrar"
+                >
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="./renderer.js"></script>
+      <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
+  </body>
+</html>

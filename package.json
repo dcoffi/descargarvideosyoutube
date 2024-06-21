@@ -1,0 +1,21 @@
+{
+  "name": "descarga-de-videos-youtube",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron main.js"
+  },
+  "keywords": [],
+  "author": "Daivinson Coffi",
+  "license": "MIT",
+  "description": "",
+  "devDependencies": {
+    "electron": "^31.0.1"
+  },
+  "dependencies": {
+    "@distube/ytdl-core": "^4.13.4",
+    "fs": "^0.0.1-security",
+    "ytdl-core": "^4.11.5"
+  }
+}

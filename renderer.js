@@ -24,7 +24,7 @@ document.getElementById('download-btn').addEventListener('click', async () => {
         Swal.fire({
             icon: 'success',
             title: 'Descarga completada',
-            text: `Video descargado en: ${videoPath}, por favor diríjase a dicha ruta y verifique el archivo descargado.`,
+            text: `Video descargado en: \n${videoPath}, por favor diríjase a dicha ruta y verifique el archivo descargado.`,
         });
     } catch (error) {
         mispinner.classList.add('d-none');
@@ -67,7 +67,7 @@ document.getElementById('download-audio-btn').addEventListener('click', async ()
         Swal.fire({
             icon: 'success',
             title: 'Descarga completada',
-            text: `Audio descargado en: ${audioPath}, por favor diríjase a dicha ruta y verifique el archivo descargado.`,
+            text: `Audio descargado en: \n${audioPath}, por favor diríjase a dicha ruta y verifique el archivo descargado.`,
         });
         
     } catch (error) {
@@ -78,6 +78,40 @@ document.getElementById('download-audio-btn').addEventListener('click', async ()
             icon: 'error',
             title: 'Error',
             text: `Error descargando el audio: Por favor ingresa una URL válida de YouTube`,
+        });
+    }
+});
+
+document.getElementById('download-subs-btn').addEventListener('click', async () => {
+    const mispinner=document.getElementById('mi-spinner');
+    const url = document.getElementById('url').value;
+    mispinner.classList.remove('d-none');
+    filaVideo.classList.add('p-3');
+    if (!url) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Por favor ingresa una URL de YouTube',
+        });
+        return;
+    }
+    try {
+        const subtitlePaths = await window.electronAPI.downloadSubs(url);
+        mispinner.classList.add('d-none');
+        filaVideo.classList.remove('p-3');
+        Swal.fire({
+            icon: 'success',
+            title: 'Descarga completada',
+            text: `Subtítulos descargados en: \n${subtitlePaths.join('\n')}, por favor diríjase a dicha ruta y verifique el archivo descargado.`,
+        });
+    } catch (error) {
+        mispinner.classList.add('d-none');
+        filaVideo.classList.remove('p-3');
+        //console.error('Error downloading subtitles:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `Error descargando los subtítulos: Por favor ingresa una URL válida de YouTube`,
         });
     }
 });

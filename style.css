@@ -8,8 +8,8 @@
 
 .boton-redondo {
     position: absolute;
-    top: 41px;
-    right: 2%;
+    top: 14px;
+    right: 4%;
         /* Ruta de la imagen */
     background-size: cover;
     /* Cubre todo el botón */
@@ -65,3 +65,31 @@
     width: 2rem; 
     height: 2rem;
 }
+/* Tooltip style */
+[data-title]:hover:after {
+    opacity: 1;
+    transition: all 0.1s ease 0.5s;
+    visibility: visible;
+  }
+  [data-title]:after {
+    content: attr(data-title);
+    background-color: #333;
+    color: #fff;
+    font-size: 14px;
+    font-family: Raleway;
+    position: absolute;
+    padding: 3px;
+    bottom: -2.3em;
+    left: -1%;
+    white-space: nowrap;
+    box-shadow: 1px 1px 3px #222222;
+    opacity: 0;
+    border: 1px solid #111111;
+    z-index: 99999;
+    visibility: hidden;
+    border-radius: 6px;
+    
+  }
+  [data-title] {
+    position: relative;
+  }

@@ -1,28 +1,52 @@
 // main.js
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain,dialog,Menu } = require('electron/main');
+const { app, BrowserWindow, ipcMain,dialog,Menu,Tray, nativeImage,Notification  } = require('electron/main');
 const path = require('node:path');
 const ytdl = require('ytdl-core');
 const fs = require('fs');
 const { log } = require('node:console');
 const Swal = require('sweetalert2');
-
+const axios = require('axios');
+const { parseStringPromise } = require('xml2js');
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 800,
-    height: 750,
+    height: 720,
+    icon: path.join(__dirname, 'assets', 'youtube.ico'), // Ruta al ícono
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     },
-    titleBarStyle: 'hidden',
+    /*titleBarStyle: 'hidden',
   titleBarOverlay: {
     color: '#2f3241',
     symbolColor: '#74b1be',
-    height: 1
-  }
+    height: 0
+  }*/
   })
+  async function convertXmlToSrt(xml) {
+    const result = await parseStringPromise(xml);
+    const transcript = result.transcript.text;
+    const srtLines = transcript.map((text, index) => {
+        const start = parseFloat(text.$.start);
+        const duration = parseFloat(text.$.dur);
+        const end = start + duration;
+
+        const startTime = formatTime(start);
+        const endTime = formatTime(end);
+
+        return `${index + 1}\n${startTime} --> ${endTime}\n${text._}\n`;
+    });
+
+    return srtLines.join('\n');
+}
+
+function formatTime(seconds) {
+    const date = new Date(0);
+    date.setSeconds(seconds);
+    return date.toISOString().substr(11, 12).replace('.', ',');
+}
   ipcMain.handle('select-directory', async () => {
     const result = await dialog.showOpenDialog({
         properties: ['openDirectory']
@@ -50,11 +74,65 @@ ipcMain.handle('download-audio', async (event, url) => {
 
   return new Promise((resolve, reject) => {
       audioStream.on('end', () => {
-          resolve(audioPath);
+        const NOTIFICATION_BODY = '✅ Audio Descargado exitosamente.'
+
+new Notification({
+ // title: NOTIFICATION_TITLE,
+  body: NOTIFICATION_BODY
+}).show()
+        resolve(audioPath);
       });
       audioStream.on('error', reject);
   });
 });
+ipcMain.handle('download-subs', async (event, url) => {
+  if (!selectedDirectory) {
+      selectedDirectory = app.getPath('documents');
+  }
+
+  const info = await ytdl.getInfo(url);
+  const subtitles = info.player_response.captions?.playerCaptionsTracklistRenderer?.captionTracks;
+
+  if (!subtitles) {
+    const NOTIFICATION_BODY = '🔴 No hay Subtitulo(s) Disponibles.'
+
+    new Notification({
+     // title: NOTIFICATION_TITLE,
+      body: NOTIFICATION_BODY
+    }).show()
+      //throw new Error('No subtitles available');
+  }
+
+  const tracks = subtitles.filter(track => ['en', 'es'].includes(track.languageCode));
+  if (tracks.length === 0) {
+    const NOTIFICATION_BODY = '🔴 No hay Subtitulo(s) Disponibles en Inglés o en Español.'
+
+    new Notification({
+     // title: NOTIFICATION_TITLE,
+      body: NOTIFICATION_BODY
+    }).show()
+      //throw new Error('No subtitles available in English or Spanish');
+  }
+
+  const downloadPromises = tracks.map(async track => {
+      const sanitizedTitle = info.videoDetails.title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+      const filePath = path.join(selectedDirectory, `${sanitizedTitle}_${track.languageCode}.srt`);
+
+      const response = await axios.get(track.baseUrl, { responseType: 'text' });
+      const srtContent = await convertXmlToSrt(response.data);
+      fs.writeFileSync(filePath, srtContent);
+      const NOTIFICATION_BODY = '✅ Subtitulo(s) Descargado(s) exitosamente.'
+
+      new Notification({
+       // title: NOTIFICATION_TITLE,
+        body: NOTIFICATION_BODY
+      }).show()
+      return filePath;
+  });
+
+  return Promise.all(downloadPromises);
+});
+
 
   ipcMain.handle('download-video', async (event, url) => {
     if (!selectedDirectory) {
@@ -72,11 +150,24 @@ ipcMain.handle('download-audio', async (event, url) => {
 
     return new Promise((resolve, reject) => {
         videoStream.on('end', () => {
+          //const NOTIFICATION_TITLE = 'Video Descargado'
+const NOTIFICATION_BODY = '✅ Video Descargado exitosamente.'
+
+new Notification({
+ // title: NOTIFICATION_TITLE,
+  body: NOTIFICATION_BODY
+}).show()
             resolve(videoPath);
         });
         videoStream.on('error', reject);
-    });
+    }
+  
+  
+  );
+    
 });
+
+
 Menu.setApplicationMenu(null);
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
@@ -88,8 +179,16 @@ Menu.setApplicationMenu(null);
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
+
 app.whenReady().then(() => {
+  const icon = nativeImage.createFromPath('assets/youtube.png')
+  bandeja = new Tray(icon)
+  const contextMenu = Menu.buildFromTemplate([
   
+    { label: '🚪Salir', type: 'normal', click: () => { app.quit(); } }
+]);
+
+bandeja.setContextMenu(contextMenu);
   createWindow()
   
   app.on('activate', () => {

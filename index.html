@@ -44,7 +44,11 @@
       </div>
       <div class="row">
         <div class="col-6">
-          👉<button id="select-dir-btn" class="btn btn-primary">
+          👉<button
+            id="select-dir-btn"
+            class="btn btn-primary"
+            data-title="Seleccione el directorio"
+          >
             📂Seleccione el directorio destino
           </button>
         </div>
@@ -78,24 +82,35 @@
         </div>
       </div>
       <div class="row m-3">
-        <div class="col-6">
+        <div class="col-4">
           <button
             id="download-btn"
-            data-bs-toggle="tooltip"
-            title="Descargar el video completo"
             class="btn btn-info mx-auto p-2"
+            data-title="Descargar Video desde Youtube"
           >
             Descargar Video 🎞️
           </button>
         </div>
-        <div class="col-6">
+        <div class="col-4">
           <button
             id="download-audio-btn"
             data-bs-toggle="tooltip"
             title="Descargar solo el audio"
             class="btn btn-warning mx-auto p-2"
+            data-title="Descargar Audio desde Youtube"
           >
             Descargar Audio 🎵
+          </button>
+        </div>
+        <div class="col-4">
+          <button
+            id="download-subs-btn"
+            data-bs-toggle="tooltip"
+            title="Descargar subtítulos"
+            class="btn btn-secondary"
+            data-title="Descargar Subtitulos desde Youtube"
+          >
+            Descargar Subtítulos📜
           </button>
         </div>
       </div>

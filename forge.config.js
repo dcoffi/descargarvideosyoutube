@@ -4,7 +4,7 @@ const path = require('node:path');
 module.exports = {
   packagerConfig: {
     asar: true,
-    icon: path.join(__dirname, 'assets', 'youtube.ico'), // Ruta al ícono de tu aplicación
+    icon: path.join(__dirname, 'assets', 'youtube.png'), // Ruta al ícono de tu aplicación
     arch: ['x64', 'ia32'], // Arquitecturas
     platform: ['win32', 'linux'] // Plataformas
   },

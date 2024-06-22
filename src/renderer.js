@@ -119,6 +119,10 @@ document.getElementById('download-subs-btn').addEventListener('click', async () 
 });
 window.addEventListener('DOMContentLoaded', () => {
     const milogo = document.getElementById('milogo');
+    const yo=document.getElementById('yo');
+    const ccsfraiche=document.getElementById('ccsfraiche');
     milogo.src ="assets/youtube.png";
-    
+    yo.src= "assets/840.png";
+    ccsfraiche.src= "assets/ccsfraiche.png";
+        
   });
